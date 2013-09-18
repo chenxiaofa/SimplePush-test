@@ -1,0 +1,98 @@
+# depslib dependency file v1.0
+1379491931 source:/home/bryan/SimplePush-test/src/Queue.c
+	"simplepush.h"
+
+1378974589 /home/bryan/SimplePush-test/src/Queue.h
+	<pthread.h>
+	<errno.h>
+	"main.h"
+
+1379491129 /home/bryan/SimplePush-test/src/main.h
+	<inttypes.h>
+
+1379491326 source:/home/bryan/SimplePush-test/src/linktable.c
+	"simplepush.h"
+
+1379491230 /home/bryan/SimplePush-test/src/linktable.h
+	"simplepush.h"
+
+1379491341 source:/home/bryan/SimplePush-test/src/main.c
+	"simplepush.h"
+	<sys/resource.h>
+
+1379494403 /home/bryan/SimplePush-test/src/workers.h
+	"simplepush.h"
+
+1379495234 /home/bryan/SimplePush-test/src/sock.h
+	"simplepush.h"
+
+1379494416 source:/home/bryan/SimplePush-test/src/workers.c
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<stdio.h>
+	<malloc.h>
+	<time.h>
+	"simplepush.h"
+
+1379496812 source:/home/bryan/SimplePush-test/src/sock.c
+	"simplepush.h"
+	<sys/epoll.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<pthread.h>
+	<fcntl.h>
+
+1379492679 /home/bryan/SimplePush-test/src/push.h
+	"simplepush.h"
+
+1379491349 source:/home/bryan/SimplePush-test/src/push.c
+	"simplepush.h"
+
+1379491568 /home/bryan/SimplePush-test/src/http.h
+	"simplepush.h"
+
+1379493089 /home/bryan/SimplePush-test/src/queue.h
+	"simplepush.h"
+
+1379324591 source:/home/bryan/SimplePush-test/src/hash.c
+	<inttypes.h>
+	<sys/types.h>
+
+1379494325 /home/bryan/SimplePush-test/src/simplepush.h
+	<stdio.h>
+	<string.h>
+	<inttypes.h>
+	<pthread.h>
+	<errno.h>
+	"linklist.h"
+	"queue.h"
+	"connectionpoll.h"
+	"sock.h"
+	"http.h"
+	"push.h"
+	"workers.h"
+
+1379497042 source:/home/bryan/SimplePush-test/src/simplepush.c
+	"simplepush.h"
+	<sys/resource.h>
+
+1379491552 source:/home/bryan/SimplePush-test/src/http.c
+	"simplepush.h"
+
+1379492670 /home/bryan/SimplePush-test/src/linklist.h
+	"simplepush.h"
+
+1379493096 source:/home/bryan/SimplePush-test/src/queue.c
+	"simplepush.h"
+
+1379492769 source:/home/bryan/SimplePush-test/src/linklist.c
+	"simplepush.h"
+
+1379497235 /home/bryan/SimplePush-test/src/connectionpoll.h
+	"simplepush.h"
+
+1379497001 source:/home/bryan/SimplePush-test/src/connectionpoll.c
+	"simplepush.h"
+

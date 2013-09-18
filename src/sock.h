@@ -1,26 +1,26 @@
-#include "main.h"
-#include "Queue.h"
+#include "simplepush.h"
+
+#ifndef SOCK_H_INCLUDED
+#define SOCK_H_INCLUDED
 
 #define SOCK_OK 0
 #define SOCK_INIT_FAILED -1
 
-#define PROTNUMBER 6666
-#define MAX_EPOLL 1024
-
-#define MAX_EPOLL_EVENTS 64
-
-#define MAX_LISTEN_QUEUE_NUM 1024
-#define MAX_READ_LENGTH 1024
 
 #define SOCK_LISTENING 1
 #define SOCK_LISTEN_STOP 0
 
-
 #define SOCK_EPOLL_INIT_FAILED -1
 
-INT16 sock_init();
+uint16_t sock_init();
 void* listen_thread(void *arg);
 void* listen_thread_epoll(void* arg);
-void set_queue(Queue *queue);
-void stop_listen();
-void close_socket(SOCK_FD fd);
+void  sock_set_queue(queue_t *queue);
+void  stop_listen();
+void  close_socket(SOCK_FD fd);
+void  show_fd_list(void);
+void  push_to_connections(void* data);
+void  sock_set_connection_poll(connection_t* connection_poll);
+
+
+#endif // SOCK_H_INCLUDED

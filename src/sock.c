@@ -1,16 +1,12 @@
+#include "simplepush.h"
+
 #include <sys/epoll.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <pthread.h>
 #include <fcntl.h>
-#include "sock.h"
-#include "main.h"
-#include "Queue.h"
+
 
 //listening thread id
 pthread_t listen_thread_id = 0;
@@ -20,7 +16,7 @@ pthread_t epoll_thread_id = 0;
 
 
 //task queue
-Queue *_sock_task_queue = NULL;
+queue_t *_sock_task_queue = NULL;
 
 // fd for socket listening
 SOCK_FD listen_fd=-1;
@@ -40,22 +36,44 @@ struct epoll_event ev;
 //mutex for socket
 pthread_mutex_t _socket_mutex;
 
-void _mutex_lock(){
+//socket fd list
+static link_list_t _socket_fd_list;
+
+static connection_t** _connection_pool;
+
+void  sock_set_connection_poll(connection_t* connection_pool){
+    _connection_pool = connection_pool;
+}
+
+
+static void _mutex_lock(void){
     pthread_mutex_lock(&_socket_mutex);
 }
-void _mutex_unlock(){
+static void _mutex_unlock(void){
     pthread_mutex_unlock(&_socket_mutex);
 }
 
-void set_queue(Queue *queue){
+void sock_set_queue(queue_t *queue){
 	_sock_task_queue = queue;
 }
 
+static void add_to_fd_list(SOCK_FD fd){
+    link_inset_node(&_socket_fd_list,fd);
+}
+static void remove_from_fd_list(SOCK_FD fd){
+    link_delete_node(&_socket_fd_list,fd);
+}
+void show_fd_list(void){
+    print_list(&_socket_fd_list);
+}
 
-INT16 sock_init(){
+uint16_t sock_init(){
 
     //init mutex
     pthread_mutex_init(&_socket_mutex,NULL);
+
+    //init fd list
+    link_list_init(&_socket_fd_list);
 
     //create thread to listen socket
 	if(pthread_create(&listen_thread_id,NULL,listen_thread,NULL)){
@@ -65,6 +83,7 @@ INT16 sock_init(){
     }
 
 }
+
 
 void add_epoll_event(SOCK_FD fd){
 
@@ -77,12 +96,17 @@ void add_epoll_event(SOCK_FD fd){
 
 }
 void remove_epoll_event(SOCK_FD fd){
+    _mutex_lock();
 
+    ev.data.fd=fd;
+    epoll_ctl(epoll_fd,EPOLL_CTL_DEL,fd,&ev);
+
+    _mutex_unlock();
 }
 void close_socket(SOCK_FD fd){
 
     close(fd);
-
+    remove_from_fd_list(fd);
     remove_epoll_event(fd);
 
 }
@@ -103,7 +127,7 @@ void* epoll_thread(void* arg){
 		//等待epoll事件的发生
 		nfds=epoll_wait(epoll_fd,events,MAX_EPOLL_EVENTS,-1);
 
-		printf("epoll events num:%d\r\n",nfds);
+		//printf("epoll events num:%d\r\n",nfds);
 		//处理所发生的所有事件
 		for(i=0;i<nfds;++i){
 
@@ -114,11 +138,12 @@ void* epoll_thread(void* arg){
 				en_queue(_sock_task_queue,sock_readable_fd);
 			} else if(events[i].events&EPOLLERR){
                 printf("event EPOLLERR\r\n");
-				close(events[i].data.fd);
-				--count;
 
-			} else if(events[i].events&EPOLLHUP){
-                    printf("event EPOLLHUP\r\n");
+
+			} else if(events[i].events&EPOLLRDHUP){
+                    close(events[i].data.fd);
+                    --count;
+                    printf("event EPOLLRDHUP\r\n");
 			}
 		}
 	}
@@ -141,7 +166,7 @@ INT16 init_epoll(struct epoll_event* ev){
     }
 
     //set interesting events
-    ev->events=EPOLLIN|EPOLLET|EPOLLERR|EPOLLHUP;
+    ev->events=EPOLLIN|EPOLLET|EPOLLERR|EPOLLRDHUP;
 
     //create thread to run epoll
     if(pthread_create(&epoll_thread_id,NULL,epoll_thread,NULL)){
@@ -206,7 +231,8 @@ void* listen_thread(void *arg){
                 stop_listen();
 		    	continue;
 		}else{
-            printf("TCP Connection in id:%d\r\n",conn_fd);
+            //printf("TCP Connection in id:%d\r\n",conn_fd);
+            add_to_fd_list(conn_fd);
 
             //counting
             ++count;
@@ -221,3 +247,6 @@ void* listen_thread(void *arg){
 	    close(listen_fd);
 }
 
+void push_to_connections(void* data){
+    push_to_list(&_socket_fd_list,(char*)data);
+}

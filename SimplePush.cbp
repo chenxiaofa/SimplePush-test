@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SimplePush" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/SimplePush" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="pthread" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/SimplePush" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Linker>
+			<Add library="pthread" />
+		</Linker>
+		<Unit filename="src/connectionpoll.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/connectionpoll.h" />
+		<Unit filename="src/hash.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/hash.h" />
+		<Unit filename="src/http.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/http.h" />
+		<Unit filename="src/linklist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/linklist.h" />
+		<Unit filename="src/push.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/push.h" />
+		<Unit filename="src/queue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/queue.h" />
+		<Unit filename="src/simplepush.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/simplepush.h" />
+		<Unit filename="src/sock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sock.h" />
+		<Unit filename="src/workers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/workers.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
