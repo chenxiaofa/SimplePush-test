@@ -6,8 +6,13 @@ uint16_t connection_scruct_init(connection_t* connection){
 
     if(connection==NULL)
         return 0;
-    if(connection->buff==NULL)
+    if(connection->buff==NULL){
         connection->buff = (void*)malloc(SOCKET_BUFF_SIZE);
+        if(connection->buff==NULL){
+            FAIL_WITH_ERROR("malloc failed connectionpool.c connection_scruct_init");
+        }
+    }
+
     time(&(connection->last_act));
     connection->offset = 0;
 

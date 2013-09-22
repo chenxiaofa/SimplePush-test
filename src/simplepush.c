@@ -1,7 +1,7 @@
 #include "simplepush.h"
 
 #include <sys/resource.h>
-
+#define THREAD_NUM 10
 
 queue_t main_socket_even_queue;
 
@@ -48,7 +48,7 @@ int main()
     worker_set_task_queue(&main_socket_even_queue);
     worker_set_fd_list(&socket_fd_list);
 
-    workers_init(&workers,10);
+    workers_init(&workers,THREAD_NUM);
 
     sock_set_queue(&main_socket_even_queue);
     sock_init();

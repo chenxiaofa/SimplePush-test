@@ -38,7 +38,9 @@ void link_inset_node(link_list_t* link,SOCK_FD sock_fd)
 
 
     np = NEWLNODE();
-
+    if(np==NULL){
+        FAIL_WITH_ERROR("malloc faild linklist.c link_inset_node");
+    }
     np->fd   = sock_fd;
 
     np->next = p->next;

@@ -26,10 +26,13 @@
 #include <pthread.h>
 #include <errno.h>
 
+#include "error.h"
 
 #include "linklist.h"
 #include "queue.h"
 #include "connectionpool.h"
+
+
 
 #include "sock.h"
 #include "http.h"

@@ -25,10 +25,15 @@ INT16 en_queue(queue_t *queue,INT16 data){
 
 
 		queue_node_t* p = NewQNode();
+
+
+
 		if(p == NULL) {
 			pthread_mutex_unlock(&(queue->mutex));
-
 			results = QUEUE_FAILED;
+
+			FAIL_WITH_ERROR("malloc faild queue.c en_queue");
+
 		}else{
 			p->data  = data;
 			p->next  = NULL;
