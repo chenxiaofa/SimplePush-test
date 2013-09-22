@@ -29,7 +29,7 @@
 
 #include "linklist.h"
 #include "queue.h"
-#include "connectionpoll.h"
+#include "connectionpool.h"
 
 #include "sock.h"
 #include "http.h"
