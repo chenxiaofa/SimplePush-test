@@ -1,36 +1,33 @@
-#ifndef QUEUE_INCULDED
-#define QUEUE_INCULDED 1
+#include "simplepush.h"
 
-#include <pthread.h>
-#include <errno.h>
-#include "main.h"
+#ifndef QUEUE_INCULDED
+#define QUEUE_INCULDED
+
 #define QUEUE_FAILED -1
 #define QUEUE_OK 0
 #define QUEUE_BUSY 1
 #define QUEUE_EMPTY 2
 
-#define NewQNode() (QNodePtr)malloc(sizeof(struct QNode))
+#define NewQNode() (queue_node_t*)malloc(sizeof(queue_node_t))
+
 typedef struct QNode{
   INT16        data;
   struct QNode    *next;
-}QNode , * QNodePtr;
+}queue_node_t;
 
 typedef struct Queue{
-    QNodePtr front;
-    QNodePtr rear;
+    queue_node_t* front;
+    queue_node_t* rear;
     pthread_rwlock_t lock;
     pthread_mutex_t mutex;
     pthread_cond_t cond1;
 
-}Queue;
-typedef struct QData{
+}queue_t;
 
-}QData;
-
-INT16 init_queue(Queue *queue);
-INT16 en_queue(Queue *queue,INT16 data);
-INT16 de_queue(Queue *queue,INT16 *data);
-void print_queue(Queue *queue);
-INT16 en_queue_block(Queue *queue,UN_INT16 data);
+INT16 queue_init(queue_t *queue);
+INT16 en_queue(queue_t *queue,INT16 data);
+INT16 de_queue(queue_t *queue,INT16 *data);
+void print_queue(queue_t *queue);
+INT16 en_queue_block(queue_t *queue,UN_INT16 data);
 
 #endif
