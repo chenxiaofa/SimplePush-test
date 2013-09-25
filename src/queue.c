@@ -39,12 +39,10 @@ INT16 en_queue(queue_t *queue,INT16 data){
 			p->next  = NULL;
 			queue->rear->next = p;
 			queue->rear = p;
-
-            pthread_cond_broadcast(&(queue->cond1));
-
 			results = QUEUE_OK;
 		}
 		pthread_mutex_unlock(&(queue->mutex));
+		pthread_cond_broadcast(&(queue->cond1));
 	}else{
 		results = QUEUE_FAILED;
 	}
@@ -56,21 +54,19 @@ INT16 de_queue(queue_t *queue,INT16 *data){
 
 		pthread_mutex_lock(&(queue->mutex));
 
-		while(queue->front->next == NULL)
+		while(queue->front == queue->rear)
             pthread_cond_wait(&(queue->cond1),&(queue->mutex));
 
-		if(queue->front->next != NULL){
-			queue_node_t* p = queue->front->next;
-			queue->front->next = p->next;
-			*data = p->data;
-			if(queue->rear == p)queue->rear = queue->front;
-			free(p);
-			results = QUEUE_OK;
-		}else{
-			results = QUEUE_EMPTY;
-		}
+        queue_node_t* p = queue->front->next;
+        queue->front->next = p->next;
+        *data = p->data;
+        if(queue->rear == p)queue->rear = queue->front;
+        free(p);
+
+        results = QUEUE_OK;
 
 		pthread_mutex_unlock(&(queue->mutex));
+
 	}else{
 		results = QUEUE_FAILED;
 	}

@@ -7,7 +7,7 @@ typedef struct connection_t{
 
     uint16_t fd;
     time_t  last_act;
-    char*   buff;
+    char    buff[256];
     uint16_t offset;
     pthread_mutex_t mutex;
 

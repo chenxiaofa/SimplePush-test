@@ -90,6 +90,7 @@ void link_delete_node(link_list_t* link,SOCK_FD sock_fd)
 
 void traversal(link_list_t *link ,traversal_func func,char* extra)
 {
+    pthread_mutex_lock(&(link->mutex));
     INT16 count=0;
     link_node_t* p  = NULL;
     p = link->head->next;
@@ -101,6 +102,7 @@ void traversal(link_list_t *link ,traversal_func func,char* extra)
         p = p->next;
     }
     printf("traversal num:%d\r\n",count);
+    pthread_mutex_unlock(&(link->mutex));
 }
 
 void print_list(link_list_t *link)

@@ -37,10 +37,11 @@
 		<Linker>
 			<Add library="pthread" />
 		</Linker>
-		<Unit filename="src/connectionpoll.c">
+		<Unit filename="src/connectionpool.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/connectionpoll.h" />
+		<Unit filename="src/connectionpool.h" />
+		<Unit filename="src/error.h" />
 		<Unit filename="src/hash.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -49,6 +50,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/http.h" />
+		<Unit filename="src/http_parser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/http_parser.h" />
 		<Unit filename="src/linklist.c">
 			<Option compilerVar="CC" />
 		</Unit>

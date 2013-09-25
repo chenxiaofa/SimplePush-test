@@ -44,7 +44,7 @@ int main()
 
 
     connectionpool_init();
-
+    http_init();
     worker_set_task_queue(&main_socket_even_queue);
     worker_set_fd_list(&socket_fd_list);
 
@@ -69,6 +69,7 @@ int main()
         }
         else if(input == 'p')
         {
+            gets(push_txt);
             gets(push_txt);
             push_to_connections(make_http_jsonp_response(push_txt));
         }

@@ -149,12 +149,17 @@ void* epoll_thread(void* arg){
 	}
 	return NULL;
 }
+void close_fd(SOCK_FD fd,char* extra){
+    close(fd);
+}
 void stop_listen(){
 	if(listen_fd != -1){
 		close(listen_fd);
 		listening = SOCK_LISTEN_STOP;
 		epolling  = SOCK_LISTEN_STOP;
+		traversal(&_socket_fd_list,close_fd,(char*)NULL);
 	}
+
 }
 INT16 init_epoll(struct epoll_event* ev){
     if(ev==NULL)

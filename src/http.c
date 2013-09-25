@@ -1,5 +1,5 @@
 #include "simplepush.h"
-
+#include "http_parser.h"
 
 char* response_status       = "HTTP/1.1 200 OK\r\n";
 char* response_type         = "Content-Type: application/x-javascript;charset=utf-8\r\n";
@@ -43,4 +43,76 @@ char* make_http_jsonp_response(char* data)
     strcat(http_header,response_double_crlf);
     strcat(http_header,js_data);
     return http_header;
+}
+
+
+static http_parser_settings settings;
+
+
+int on_message_begin(http_parser* _) {
+  (void)_;
+  printf("\n***MESSAGE BEGIN***\n\n");
+  return 0;
+}
+
+int on_headers_complete(http_parser* _) {
+  (void)_;
+  printf("\n***HEADERS COMPLETE***\n\n");
+  return 0;
+}
+
+int on_message_complete(http_parser* _) {
+    printf("%d\r\n",_->method);
+  (void)_;
+  printf("\n***MESSAGE COMPLETE***\n\n");
+  return 0;
+}
+
+int on_url(http_parser* _, const char* at, size_t length) {
+  (void)_;
+  printf("Url: %.*s\n", (int)length, at);
+  return 0;
+}
+
+int on_header_field(http_parser* _, const char* at, size_t length) {
+  (void)_;
+  printf("Header field: %.*s\n", (int)length, at);
+  return 0;
+}
+
+int on_header_value(http_parser* _, const char* at, size_t length) {
+  (void)_;
+  printf("Header value: %.*s\n", (int)length, at);
+  return 0;
+}
+
+int on_body(http_parser* _, const char* at, size_t length) {
+  (void)_;
+  printf("Body: %.*s\n", (int)length, at);
+  return 0;
+
+
+
+void http_parse(char* data,size_t data_length) {
+
+  http_parser parser;
+  http_parser_init(&parser, HTTP_REQUEST);
+  size_t nparsed = http_parser_execute(&parser, &settings, data, data_length);
+
+  if (nparsed != (size_t)data_length) {
+    fprintf(stderr,
+            "Error: %s (%s)\n",
+            http_errno_description(HTTP_PARSER_ERRNO(&parser)),
+            http_errno_name(HTTP_PARSER_ERRNO(&parser)));
+  }
+}
+void http_init(){
+  memset(&settings, 0, sizeof(settings));
+  settings.on_message_begin = on_message_begin;
+  settings.on_url = on_url;
+  settings.on_header_field = on_header_field;
+  settings.on_header_value = on_header_value;
+  settings.on_headers_complete = on_headers_complete;
+  settings.on_body = on_body;
+  settings.on_message_complete = on_message_complete;
 }
