@@ -8,7 +8,7 @@
 #define MAX_EPOLL 65536
 #define MAX_EPOLL_EVENTS 256
 #define MAX_LISTEN_QUEUE_NUM 65536
-#define MAX_READ_LENGTH 1024
+#define MAX_READ_LENGTH 2048
 
 #define SOCK_FD int
 

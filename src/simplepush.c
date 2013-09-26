@@ -75,7 +75,8 @@ int main()
         }
         else if(input == 'c')
         {
-            printf("count:%d\r\n",count);
+            scanf("%d",&fd);
+            close_socket(fd);
         }
         else if(input == 'd')
         {

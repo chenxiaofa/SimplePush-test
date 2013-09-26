@@ -28,8 +28,11 @@ inline void connection_unlock(connection_t* connection){
 
 void connectionpool_init(){
     int i = 0;
-    for(i=0;i<MAX_FD;i++)
+    for(i=0;i<MAX_FD;i++){
         pthread_mutex_init(&(connections[i].mutex),NULL);
+        connections[i].fd = i;
+    }
+
 
 }
 connection_t* get_connection_sctuct(uint16_t fd){

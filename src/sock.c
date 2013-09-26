@@ -88,19 +88,18 @@ uint16_t sock_init(){
 void add_epoll_event(SOCK_FD fd){
 
     _mutex_lock();
-
     ev.data.fd=fd;
     epoll_ctl(epoll_fd,EPOLL_CTL_ADD,fd,&ev);
-
+    count++;
     _mutex_unlock();
+
 
 }
 void remove_epoll_event(SOCK_FD fd){
     _mutex_lock();
-
     ev.data.fd=fd;
     epoll_ctl(epoll_fd,EPOLL_CTL_DEL,fd,&ev);
-
+    count--;
     _mutex_unlock();
 }
 void close_socket(SOCK_FD fd){
@@ -236,14 +235,11 @@ void* listen_thread(void *arg){
                 stop_listen();
 		    	continue;
 		}else{
-            //printf("TCP Connection in id:%d\r\n",conn_fd);
+
             add_to_fd_list(conn_fd);
-
-            //counting
-            ++count;
-
-            // add connection fd to epoll list
             add_epoll_event(conn_fd);
+
+
 		}
 
     }

@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="src/connectionpool.c" open="0" top="0" tabpos="7">
-		<Cursor position="909" topLine="1" />
+	<File name="src/connectionpool.c" open="1" top="1" tabpos="8">
+		<Cursor position="574" topLine="15" />
 	</File>
-	<File name="src/connectionpool.h" open="0" top="0" tabpos="8">
-		<Cursor position="181" topLine="0" />
+	<File name="src/connectionpool.h" open="1" top="0" tabpos="3">
+		<Cursor position="324" topLine="0" />
 	</File>
 	<File name="src/error.h" open="0" top="0" tabpos="0">
 		<Cursor position="155" topLine="0" />
 	</File>
-	<File name="src/http.c" open="1" top="0" tabpos="7">
-		<Cursor position="1700" topLine="66" />
+	<File name="src/http.c" open="1" top="0" tabpos="1">
+		<Cursor position="2032" topLine="127" />
 	</File>
-	<File name="src/linklist.c" open="1" top="0" tabpos="4">
+	<File name="src/http.h" open="1" top="0" tabpos="2">
+		<Cursor position="255" topLine="0" />
+	</File>
+	<File name="src/http_parser.c" open="0" top="0" tabpos="0">
+		<Cursor position="63971" topLine="2172" />
+	</File>
+	<File name="src/linklist.c" open="0" top="0" tabpos="4">
 		<Cursor position="1463" topLine="80" />
 	</File>
 	<File name="src/linklist.h" open="0" top="0" tabpos="0">
 		<Cursor position="186" topLine="0" />
 	</File>
-	<File name="src/push.c" open="1" top="1" tabpos="6">
-		<Cursor position="121" topLine="0" />
+	<File name="src/push.c" open="1" top="0" tabpos="6">
+		<Cursor position="327" topLine="0" />
 	</File>
-	<File name="src/push.h" open="0" top="0" tabpos="0">
-		<Cursor position="277" topLine="0" />
+	<File name="src/push.h" open="1" top="0" tabpos="7">
+		<Cursor position="215" topLine="0" />
 	</File>
-	<File name="src/queue.c" open="1" top="0" tabpos="3">
+	<File name="src/queue.c" open="0" top="0" tabpos="3">
 		<Cursor position="1013" topLine="46" />
 	</File>
 	<File name="src/queue.h" open="0" top="0" tabpos="0">
 		<Cursor position="486" topLine="0" />
 	</File>
-	<File name="src/simplepush.c" open="1" top="0" tabpos="1">
-		<Cursor position="725" topLine="41" />
+	<File name="src/simplepush.c" open="1" top="0" tabpos="5">
+		<Cursor position="1184" topLine="56" />
 	</File>
 	<File name="src/simplepush.h" open="0" top="0" tabpos="0">
-		<Cursor position="545" topLine="0" />
+		<Cursor position="399" topLine="0" />
 	</File>
-	<File name="src/sock.c" open="1" top="0" tabpos="5">
-		<Cursor position="3059" topLine="146" />
+	<File name="src/sock.c" open="0" top="0" tabpos="5">
+		<Cursor position="3059" topLine="149" />
 	</File>
 	<File name="src/sock.h" open="0" top="0" tabpos="0">
 		<Cursor position="502" topLine="0" />
 	</File>
-	<File name="src/workers.c" open="1" top="0" tabpos="2">
-		<Cursor position="2029" topLine="58" />
+	<File name="src/workers.c" open="1" top="0" tabpos="4">
+		<Cursor position="1042" topLine="49" />
 	</File>
 	<File name="src/workers.h" open="0" top="0" tabpos="0">
 		<Cursor position="297" topLine="0" />

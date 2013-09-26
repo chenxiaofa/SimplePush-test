@@ -44,15 +44,7 @@ void close_socket_fd(SOCK_FD fd){
     connection_t* conn_data = get_connection_sctuct(fd);
     conn_data->offset=0;
 }
-inline char _strcmp(char* a,char* b){
-    int offset = 0;
-    while(*(a+offset)!=0 && *(b+offset)!=0){
-        if(*(a+offset) != *(b+offset))
-            return 0;
-        offset++;
-    }
-    return 1;
-}
+
 void* work_function(void* arg){
     INT16 i = 0;
 	INT16 sock_fd = 0;
@@ -70,23 +62,14 @@ void* work_function(void* arg){
 			    printf("read socket error: %s(errno: %d)\n",strerror(errno),errno);
 			    remove_from_push_list(_fd_list,sock_fd);
 			    close_socket_fd(sock_fd);
-			    --count;
 
 			}else if(read_length == 0){
                 printf("sock_fd:%d exitting \r\n",sock_fd);
                 remove_from_push_list(_fd_list,sock_fd);
                 close_socket_fd(sock_fd);
-                --count;
-            }/*else if(conn_data->buff[0]=='r'){
-                add_to_push_list(_fd_list,sock_fd);
-                write(sock_fd,"registered\r\n",12);
-            }else if(conn_data->buff[0]=='q'){
-                remove_from_push_list(_fd_list,sock_fd);
-                write(sock_fd,"Unregistered\r\n",12);
-            }*/else{
-                http_parse(conn_data->buff,read_length);
+            }else{
+                http_parse(conn_data->buff,read_length,conn_data);
 
-                //printf("%s",conn_data->buff);
             }
 
 		}

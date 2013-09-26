@@ -99,7 +99,7 @@ do {                                                                 \
     FOR##_mark = NULL;                                               \
   }                                                                  \
 } while (0)
-  
+
 /* Run the data callback FOR and consume the current byte */
 #define CALLBACK_DATA(FOR)                                           \
     CALLBACK_DATA_(FOR, p - FOR##_mark, p - data + 1)
@@ -1363,7 +1363,6 @@ size_t http_parser_execute (http_parser *parser,
           CALLBACK_DATA(header_field);
           break;
         }
-
         SET_ERRNO(HPE_INVALID_HEADER_TOKEN);
         goto error;
       }
