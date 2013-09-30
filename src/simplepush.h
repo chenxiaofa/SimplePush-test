@@ -18,8 +18,6 @@
 #define INT16 int
 
 
-
-
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
@@ -29,24 +27,21 @@
 
 
 #include "error.h"
-
 #include "linklist.h"
 #include "queue.h"
 #include "connectionpool.h"
-
-
-
+#include "list.h"
 #include "sock.h"
 #include "http.h"
-
 #include "push.h"
 #include "workers.h"
+
+#include "application.h"
+#include "session.h"
+
 
 uint16_t count;
 
 
-
-
-
-
 #endif // SIMPLEPUSH_H_INCLUDED
+

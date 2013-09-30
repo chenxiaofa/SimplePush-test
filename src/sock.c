@@ -58,10 +58,10 @@ void sock_set_queue(queue_t *queue){
 }
 
 static void add_to_fd_list(SOCK_FD fd){
-    link_inset_node(&_socket_fd_list,fd);
+    link_insert_node(&_socket_fd_list,(void*)fd);
 }
 static void remove_from_fd_list(SOCK_FD fd){
-    link_delete_node(&_socket_fd_list,fd);
+    link_delete_node(&_socket_fd_list,(void*)fd);
 }
 void show_fd_list(void){
     print_list(&_socket_fd_list);
@@ -104,7 +104,11 @@ void remove_epoll_event(SOCK_FD fd){
 }
 void close_socket(SOCK_FD fd){
 
+    connection_t* c = get_connection_sctuct(fd);
+    session_t* s = get_session(c->sid);
+    s->fd=0;
     close(fd);
+
     remove_from_fd_list(fd);
     remove_epoll_event(fd);
 
@@ -148,8 +152,8 @@ void* epoll_thread(void* arg){
 	}
 	return NULL;
 }
-void close_fd(SOCK_FD fd,char* extra){
-    close(fd);
+void close_fd(void* fd,char* extra){
+    close((SOCK_FD)fd);
 }
 void stop_listen(){
 	if(listen_fd != -1){

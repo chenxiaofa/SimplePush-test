@@ -3,12 +3,12 @@
 void link_list_init(link_list_t* link)
 {
     link->head        =  NEWLNODE();
-    link->head->fd    =  0;
+    link->head->data  =  NULL;
     link->head->next  =  NULL;
     pthread_mutex_init(&(link->mutex),NULL);
 }
 
-void link_inset_node(link_list_t* link,SOCK_FD sock_fd)
+void link_insert_node(link_list_t* link,void* data)
 {
 
     if(link==NULL)
@@ -24,14 +24,14 @@ void link_inset_node(link_list_t* link,SOCK_FD sock_fd)
     while(p->next)
     {
 
-        if(p->next->fd==sock_fd)
+        if(p->next->data==data)
         {
             pthread_mutex_unlock(&(link->mutex));
             return;
         }
 
 
-        if(p->next->fd > sock_fd)
+        if(p->next->data > data)
             break;
         p = p->next;
     }
@@ -41,7 +41,7 @@ void link_inset_node(link_list_t* link,SOCK_FD sock_fd)
     if(np==NULL){
         FAIL_WITH_ERROR("malloc faild linklist.c link_inset_node");
     }
-    np->fd   = sock_fd;
+    np->data   = data;
 
     np->next = p->next;
     p->next  = np;
@@ -50,7 +50,7 @@ void link_inset_node(link_list_t* link,SOCK_FD sock_fd)
 
 
 }
-void link_delete_node(link_list_t* link,SOCK_FD sock_fd)
+void link_delete_node(link_list_t* link,void* data)
 {
 
     if(link==NULL)
@@ -67,7 +67,7 @@ void link_delete_node(link_list_t* link,SOCK_FD sock_fd)
 
     while(p->next)
     {
-        if(p->next->fd == sock_fd)
+        if(p->next->data == data)
         {
 
 
@@ -75,7 +75,7 @@ void link_delete_node(link_list_t* link,SOCK_FD sock_fd)
 
             p->next = np->next;
 
-            np->fd   = 0;
+            np->data   = NULL;
             np->next = NULL;
             free(np);
             break;
@@ -98,7 +98,7 @@ void traversal(link_list_t *link ,traversal_func func,char* extra)
     while(p)
     {
         count++;
-        (*func)(p->fd,extra);
+        (*func)(p->data,extra);
         p = p->next;
     }
     printf("traversal num:%d\r\n",count);
@@ -113,7 +113,7 @@ void print_list(link_list_t *link)
 
     while(p)
     {
-        printf("fd:%d \r\n",p->fd);
+        printf("fd:%d \r\n",(uint16_t)(p->data));
         p = p->next;
     }
 

@@ -5,7 +5,7 @@
 
 #define NEWLNODE() (link_node_t*)malloc(sizeof(link_node_t))
 typedef struct link_node{
-    SOCK_FD fd;
+    void* data;
     struct link_node* next;
 }link_node_t;
 
@@ -14,11 +14,11 @@ typedef struct l_list{
     pthread_mutex_t mutex;
 }link_list_t;
 
-typedef void (*traversal_func)(int fd,char* extra);
+typedef void (*traversal_func)(void* data,char* extra);
 
 void link_list_init(link_list_t* link);
-void link_inset_node(link_list_t* link,SOCK_FD sock_fd);
-void link_delete_node(link_list_t* link,SOCK_FD sock_fd);
+void link_insert_node(link_list_t* link,void* );
+void link_delete_node(link_list_t* link,void* );
 
 void print_list(link_list_t* link);
 void traversal(link_list_t *link ,traversal_func func,char* extra);

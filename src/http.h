@@ -10,7 +10,7 @@ enum ACTIONS{
 
 #define PARAM_ACTION "action"
 #define PARAM_APPID "app_id"
-
+#define PARAM_SID   "sid"
 char* int_to_str(int len);
 char* make_http_jsonp_response(char* data);
 void http_init();

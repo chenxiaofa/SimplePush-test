@@ -37,6 +37,10 @@
 		<Linker>
 			<Add library="pthread" />
 		</Linker>
+		<Unit filename="src/application.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/application.h" />
 		<Unit filename="src/connectionpool.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -58,6 +62,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/linklist.h" />
+		<Unit filename="src/list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/list.h" />
 		<Unit filename="src/push.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -66,6 +74,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/queue.h" />
+		<Unit filename="src/session.c">
+			<Option compilerVar="CC" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="src/session.h" />
 		<Unit filename="src/simplepush.c">
 			<Option compilerVar="CC" />
 		</Unit>

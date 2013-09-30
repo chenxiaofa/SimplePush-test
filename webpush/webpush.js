@@ -35,8 +35,8 @@
 					connector.regiest();
 				}
 		};
-	_WebPush.ACTION_REGIEST = 1;
-	_WebPush.ACTION_POLLING = 2;
+	_WebPush.ACTION_REGIEST = 0;
+	_WebPush.ACTION_POLLING = 1;
 
 	_WebPush.prototype.Jsonp_Polling = _Jsonp_Polling = 
 		function(params){
@@ -66,11 +66,15 @@
 					console.log("jsonp_polling on_success");
 					if (app_settings.action == WebPush.ACTION_POLLING)
 					{
+
 						on_data_received(data);
 					}
 					else if (app_settings.action == WebPush.ACTION_REGIEST)
 					{
 						app_settings.action = WebPush.ACTION_POLLING;
+						if(data.data.sid)
+							app_settings.sid = data.data.sid;
+						on_data_received({data:"session id "+data.data.sid});
 						jsonp_option.data = app_settings;
 						polling = true;
 					}

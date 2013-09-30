@@ -22,7 +22,22 @@ char* int_to_str(int len)
     while(len != 0);
     return (char*)(str_len+p);
 }
+uint16_t str_to_int(char* str)
+{
+    int a = strlen(str)-1;
+    int b,c,d;
+    uint16_t result = 0;
+    while(!(a<0))
+    {
+        POW(b,10,a);
+        c = *str - '0';
+        result += b * c;
+        str++;
+        a--;
+    }
+    return result;
 
+}
 char* make_http_jsonp_response(char* data)
 {
     char* json_front = "jCallback({\"data\":\"";
@@ -66,7 +81,27 @@ char* make_jsonp_response(char* buff,char* data)
     strcat(buff,js_data);
     return buff;
 }
+char* make_jsonp_response_a(char* buff,char* data)
+{
+    char* json_front = "jCallback({\"data\":";
+    char* json_rear  = "});";
+    char js_data[256];
+    buff[0] = 0;
+    js_data[0]     = 0;
 
+    strcat(js_data,json_front);
+    strcat(js_data,data);
+    strcat(js_data,json_rear);
+
+    strcat(buff,response_status);
+    strcat(buff,response_type);
+    strcat(buff,response_allow_origin);
+    strcat(buff,response_length);
+    strcat(buff,int_to_str(strlen(js_data)));
+    strcat(buff,response_double_crlf);
+    strcat(buff,js_data);
+    return buff;
+}
 static http_parser_settings settings;
 
 /*
@@ -83,26 +118,31 @@ int on_headers_complete(http_parser* _)
     printf("\n***HEADERS COMPLETE***\n\n");
     printf("app_id:%s \r\n",conn->app_id);
     printf("action:%d \r\n",conn->action);
+    printf("sid:%d \r\n",conn->sid);
 
     printf("ACTION_REGIEST:%d\r\n",ACTION_REGIEST);
     if(conn->action == ACTION_REGIEST)
-        push_to_fd(conn->fd,make_jsonp_response(conn->buff,"LOGIN,OK"));
+    {
+        char sid_json[20]={0};
+        session_t* s = get_free_session();
+        strcat(sid_json,"{sid:\"");
+        strcat(sid_json,int_to_str(s->session_id));
+        strcat(sid_json,"\"}");
+
+        push_to_fd(conn->fd,make_jsonp_response_a(conn->buff,sid_json));
+    }
+    else
+    {
+        session_t* s = get_session(conn->sid);
+        s->fd = conn->fd;
+    }
+
     return 0;
 }
-/*
-int on_message_complete(http_parser* _)
-{
-    (void)_;
-    printf("\n***MESSAGE COMPLETE***\n\n");
-    return 0;
-}
-*/
+
 inline char _strcmp(const char* a,const char* b){
 
     int offset = 0;
-
-    //printf("_strcmp a=>%s\r\n",a);
-    //printf("_strcmp b=>%s\r\n",b);
 
     while(*(a+offset)!=0 && *(b+offset)!=0)
     {
@@ -121,9 +161,9 @@ static char* find_param(const char* uri,size_t uri_length,const char* param,size
         {
             offset += strlen(param)+1;
             *value_length = 0;
-            while((offset+*value_length) < uri_length && *(uri+offset+*value_length)!='\&')
+            while((offset+*value_length) < uri_length && *(uri+offset+*value_length)!= 0x26 /* char & */)
                 (*value_length)++;
-            return (uri+offset);
+            return (char*)(uri+offset);
         }
         offset++;
     }
@@ -135,6 +175,14 @@ int on_url(http_parser* _, const char* at, size_t uri_length)
     size_t value_length = 0;
     char*  param_start  = NULL;
 
+    param_start = find_param(at,uri_length,PARAM_SID,&value_length);
+    if(param_start!=NULL)
+    {
+        char sid[10];
+        memcpy(sid,param_start,value_length);
+        sid[value_length]=0;
+        conn->sid = str_to_int(sid);
+    }
 
     param_start = find_param(at,uri_length,PARAM_ACTION,&value_length);
     memcpy(&(conn->action),param_start,1);
@@ -149,27 +197,7 @@ int on_url(http_parser* _, const char* at, size_t uri_length)
     return 0;
 }
 
-int on_header_field(http_parser* _, const char* at, size_t length)
-{
-    (void)_;
-    printf("Header field: %.*s\n", (int)length, at);
-    return 0;
-}
 
-int on_header_value(http_parser* _, const char* at, size_t length)
-{
-    (void)_;
-    printf("Header value: %.*s\n", (int)length, at);
-    return 0;
-}
-
-int on_body(http_parser* _, const char* at, size_t length)
-{
-    (void)_;
-    printf("Body: %.*s\n", (int)length, at);
-    return 0;
-
-}
 
 void http_parse(char* data,size_t data_length,connection_t* conn)
 {

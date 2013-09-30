@@ -38,6 +38,7 @@ INT16 workers_init(workers_t *workers,INT16 max_thread){
 
 		pthread_create(&curr_worker->thread_id,NULL,work_function,(void*)i_loop);
 	}
+	return 1;
 }
 void close_socket_fd(SOCK_FD fd){
     close_socket(fd);
@@ -46,10 +47,10 @@ void close_socket_fd(SOCK_FD fd){
 }
 
 void* work_function(void* arg){
-    INT16 i = 0;
+
 	INT16 sock_fd = 0;
 	INT16 status      = 0;
-	char  buff[MAX_READ_LENGTH];
+
 	INT16 read_length = 0;
 	//printf("worker thread is created id->%u,arg->%d \r\n",pthread_self(),(INT16)arg);
 
@@ -74,6 +75,5 @@ void* work_function(void* arg){
 
 		}
 	}
-	printf("thread(id:%u) dead \r\n",(long)pthread_self());
 	return NULL;
 }

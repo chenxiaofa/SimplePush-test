@@ -100,11 +100,11 @@
 	<inttypes.h>
 	<sys/types.h>
 
-1380186495 source:/home/bryan/C/SimplePush-test/src/http.c
+1380504035 source:/home/bryan/C/SimplePush-test/src/http.c
 	"simplepush.h"
 	"http_parser.h"
 
-1380175053 /home/bryan/C/SimplePush-test/src/simplepush.h
+1380442533 /home/bryan/C/SimplePush-test/src/simplepush.h
 	<stdio.h>
 	<string.h>
 	<inttypes.h>
@@ -115,47 +115,50 @@
 	"linklist.h"
 	"queue.h"
 	"connectionpool.h"
+	"list.h"
 	"sock.h"
 	"http.h"
 	"push.h"
 	"workers.h"
+	"application.h"
+	"session.h"
 
-1379835168 /home/bryan/C/SimplePush-test/src/linklist.h
+1380247447 /home/bryan/C/SimplePush-test/src/linklist.h
 	"simplepush.h"
 
 1379835168 /home/bryan/C/SimplePush-test/src/queue.h
 	"simplepush.h"
 
-1380181200 /home/bryan/C/SimplePush-test/src/connectionpool.h
+1380446445 /home/bryan/C/SimplePush-test/src/connectionpool.h
 	"simplepush.h"
 	"http_parser.h"
 
 1379835168 /home/bryan/C/SimplePush-test/src/sock.h
 	"simplepush.h"
 
-1380186283 /home/bryan/C/SimplePush-test/src/http.h
+1380503849 /home/bryan/C/SimplePush-test/src/http.h
 	"simplepush.h"
 
-1379835168 /home/bryan/C/SimplePush-test/src/push.h
+1380503858 /home/bryan/C/SimplePush-test/src/push.h
 	"simplepush.h"
 
 1379835168 /home/bryan/C/SimplePush-test/src/workers.h
 	"simplepush.h"
 
-1380010485 source:/home/bryan/C/SimplePush-test/src/linklist.c
+1380247426 source:/home/bryan/C/SimplePush-test/src/linklist.c
 	"simplepush.h"
 
-1380102715 source:/home/bryan/C/SimplePush-test/src/push.c
+1380504781 source:/home/bryan/C/SimplePush-test/src/push.c
 	"simplepush.h"
 
 1380012955 source:/home/bryan/C/SimplePush-test/src/queue.c
 	"simplepush.h"
 
-1380185193 source:/home/bryan/C/SimplePush-test/src/simplepush.c
+1380504400 source:/home/bryan/C/SimplePush-test/src/simplepush.c
 	"simplepush.h"
 	<sys/resource.h>
 
-1380163294 source:/home/bryan/C/SimplePush-test/src/sock.c
+1380248436 source:/home/bryan/C/SimplePush-test/src/sock.c
 	"simplepush.h"
 	<sys/epoll.h>
 	<sys/types.h>
@@ -164,7 +167,7 @@
 	<pthread.h>
 	<fcntl.h>
 
-1380179831 source:/home/bryan/C/SimplePush-test/src/workers.c
+1380252518 source:/home/bryan/C/SimplePush-test/src/workers.c
 	<sys/types.h>
 	<sys/socket.h>
 	<netinet/in.h>
@@ -194,4 +197,23 @@
 	<stdlib.h>
 	<string.h>
 	<limits.h>
+
+1380252434 /home/bryan/C/SimplePush-test/src/application.h
+	"simplepush.h"
+
+1380256540 source:/home/bryan/C/SimplePush-test/src/application.c
+	"simplepush.h"
+
+1380441083 /home/bryan/C/SimplePush-test/src/list.h
+	"simplepush.h"
+
+1380444792 source:/home/bryan/C/SimplePush-test/src/list.c
+	"simplepush.h"
+
+1380502742 /home/bryan/C/SimplePush-test/src/session.h
+	"simplepush.h"
+
+1380448734 source:/home/bryan/C/SimplePush-test/src/session.c
+	"simplepush.h"
+	"session.h"
 

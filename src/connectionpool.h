@@ -12,6 +12,7 @@ typedef struct connection_t{
     char*           uri;
     char            app_id[8];
     uint8_t         action;
+    uint16_t        sid;
     http_parser     parser;
     pthread_mutex_t mutex;
 
